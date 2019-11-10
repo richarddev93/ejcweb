@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{{% block title %}
+Novo Servo
+{% endblock title %}}
+{% block content %}
+
+    <form method='POST'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type ='submit' class="waves-effect waves-light btn">Salvar</button>
+
+    </form/>
+{% endblock content %}

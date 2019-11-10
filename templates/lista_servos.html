@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Servos
+{% endblock title %}
+
+{% block content %}
+    <div class = 'row'>
+        <form method="get">
+            <div class = "col-lg-12">
+                <div ="input-group">
+                    <input type ="text" class ="form-control" name="busca" placeholder ="Buscar Servo" >
+                    <span class ="input-group-btn">
+                        <button class ="btn btn-default" type = "submit" >Pesquisa</button>
+
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <table class="table">
+        <thead>
+
+            <th>Criado em </th>
+            <th>Nome</th>
+            <th>Sobrenome</th>
+            <th>Equipe</th>
+            <th>Paróquia</th>
+            <th>Ação</th>
+
+        </thead>
+
+        <tbody>
+            {% for servo in servos %}
+                <tr>
+                    <td>{{ servo.dtcriacao}}</td>
+                    <td>{{ servo.nome}}</td>
+                    <td>{{ servo.sobrenome }}</td>
+                    <td>equipe</td>
+                    <td>{{ servo.paroquia}}</td>
+                    <td>
+                        <a href="{% url 'upd_servo' servo.pk %}" ><i class= "material-icons">mode_edit</i></a>
+                        <a href=" {% url 'del_servo' servo.pk %}" ><i class= "material-icons">delete</i></a>
+                    </td>
+                    
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Exclusão do {{object.pk}} 
+{% endblock title %}
+    
+{% block content %}
+    <form method='POST'>
+        {% csrf_token %}
+        <h4>tem certeza que deseja excluir "{{object.nome}}" ?</h4>
+        <br/>
+        <button type ='submit' class = "btn btn-primary">Remover</button>
+    </form>
+{% endblock content %}    
