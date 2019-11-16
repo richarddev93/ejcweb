@@ -4,7 +4,7 @@ from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from django.http.response import HttpResponse
 from django.core import serializers
 from .models import Person
-from .forms import newServoForm
+from .forms import newServoForm,FormTeste
 
 def home(request):
     return render(request,'home.html')
@@ -52,15 +52,21 @@ def novoServo(request):
         return redirect('lista_servos')
 
     return render (request,'form_servo.html',{'form': form})
+    #return HttpResponse(form)
 
 def atualizaServo(request,id):
     servo = get_object_or_404(Person,pk=id)
-    form = newServoForm(request.POST or None,instance = servo )
+    testeObj = servo
+    #form = newServoForm(request.POST or None,instance = servo )
+    form = FormTeste(request.POST or None,instance = servo )
     if form.is_valid():
         form.save()
         return redirect('lista_servos')
 
-    return render (request,'form_servo.html',{'form': form})
+    #return render (request,'form_servo.html',{'form': form})
+    return render (request,'formTeste.html',{'form': form})
+    
+    
     
 def removeServo(request,id):
     servo = get_object_or_404(Person,pk=id)

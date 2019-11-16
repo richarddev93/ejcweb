@@ -2,26 +2,24 @@ from django.db import models
 
 # Servos.
 class Person(models.Model):
-    escolhas_fez_encontro =(
-        (u'S','Sim'),
-        (u'N','Não'),
-    )  
     escolhas_nivel = (
-        (u'dir_espiritual',u'DiretorEspiritual'),
-        (u'coord',u'CoordenadorGeral'),
-        (u'coord_equipe',u'CoordenadordeEquipe'),
+        (u'dir_espiritual',u'Diretor Espiritual'),
+        (u'coord',u'Coordenador Geral'),
+        (u'coord_equipe',u'Coordenador de Equipe'),
         (u'dirigente',u'Dirigente'),
         (u'servo',u'Servo'),
         (u'convidado',u'Convidado'),
+        (u'encontrista',u'Encontrista'),
     )
     nome = models.CharField(verbose_name = 'Nome', max_length=50)
     sobrenome=models.CharField(max_length=70)
     apelido=models.CharField(max_length=20,blank=True,null=True)
     email=models.EmailField(blank=True,null=True)
+    tel1=models.CharField(blank=True,null=True,max_length=13)
+    tel2=models.CharField(blank=True,null=True,max_length=13)
     foto=models.ImageField(blank=True,null=True)
     dt_nasc=models.DateField(blank=True,null=True)
-    nivel=models.CharField(choices=escolhas_nivel,max_length=30,verbose_name='Nível:')
-    encontrista =models.CharField(choices=escolhas_fez_encontro,max_length=1,verbose_name='Encontrista?')
+    nivel=models.CharField(blank=True,choices=escolhas_nivel,max_length=30,verbose_name='Nível:')
     ##Endereco##
     cep=models.IntegerField()
     logradouro=models.CharField(max_length=60)
@@ -33,7 +31,8 @@ class Person(models.Model):
     paroquia=models.ForeignKey('paroquia',on_delete=models.CASCADE,blank=True,null=True)
     #controle#
     dtcriacao = models.DateField(auto_now_add=True,blank=False,null=False)
-    _deleted  = models.CharField(max_length=1,blank=True,null=True)
+    status  = models.BooleanField(default=True,editable=False)
+    obs = models.TextField(blank=True,null =True,max_length=200)
 
     def get_fullname(self):
         if self.apelido!='':

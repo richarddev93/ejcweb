@@ -1,22 +1,31 @@
-from django.forms import ModelForm,forms
+from django.forms import ModelForm
+from django import forms
 from .models import *
+from functools import partial
 
-escolhas_nivel = [
-        (u'dir_espiritual',u'DiretorEspiritual'),
-        (u'coord',u'CoordenadorGeral'),
-        (u'coord_equipe',u'CoordenadordeEquipe'),
-        (u'dirigente',u'Dirigente'),
-        (u'servo',u'Servo'),
-        (u'convidado',u'Convidado'),
-        ]
+DateInput = partial(forms.DateInput, {'class': 'datepicker','type':'date'})
 
 class newServoForm(ModelForm): 
     
     class Meta:
         model  = Person
-        #fields = ['nome','sobrenome','apelido','email','foto',
-        #'dt_nasc','nivel','encontrista',
-        #'cep','logradouro','numero','complemento','bairro','localidade','uf',
-        #'paroquia']
         fields = '__all__'
-        widgets = choices=escolhas_nivel
+        widgets = {
+            'dt_nasc': DateInput(),
+            'obs':     forms.Textarea (attrs={'class':'materialize-textarea','rows':5})       
+        }
+        
+
+
+class FormTeste(ModelForm): 
+    
+    class Meta:
+        model  = Person
+        fields = '__all__'
+        widgets = {
+            'dt_nasc': forms.DateInput(attrs ={'class':'datapicker'}),
+            'obs':     forms.Textarea (attrs={'class':'materialize-textarea','rows':5})       
+        }
+        
+
+

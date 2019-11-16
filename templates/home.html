@@ -6,7 +6,9 @@ Home - EJC
 {% block content %}
 
 
-    <center>
-        <img src=" {% static 'logo_ejc.png' %}" >
-    </center>
+  {% comment %} <input class="select-dropdown dropdown-trigger" type="text" readonly="true" data-target="select-options-57398748-cf41-56bf-730e-90dc3fb87d5d"><ul id="select-options-57398748-cf41-56bf-730e-90dc3fb87d5d" class="dropdown-content select-dropdown" tabindex="0"><li class="disabled selected" id="select-options-57398748-cf41-56bf-730e-90dc3fb87d5d0" tabindex="0"><span>Choose your profile</span></li><li id="select-options-57398748-cf41-56bf-730e-90dc3fb87d5d1" tabindex="0"><span>Manager</span></li><li id="select-options-57398748-cf41-56bf-730e-90dc3fb87d5d2" tabindex="0"><span>Developer</span></li><li id="select-options-57398748-cf41-56bf-730e-90dc3fb87d5d3" tabindex="0"><span>Business</span></li></ul><svg class="caret" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><select tabindex="-1">
+                  <option value="" disabled="" selected="">Choose your profile</option>
+                  <option value="1">Manager</option>
+                  <option value="2">Developer</option>
+                  <option value="3">Business</option> {% endcomment %}
 {% endblock content %}
