@@ -4,7 +4,7 @@ from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from django.http.response import HttpResponse
 from django.core import serializers
 from .models import Person
-from .forms import newServoForm,FormTeste
+from .forms import newServoForm
 
 
 def home(request):

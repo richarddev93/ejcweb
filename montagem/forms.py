@@ -14,18 +14,7 @@ class newServoForm(ModelForm):
             'dt_nasc': forms.DateInput(attrs ={'class':'datapicker'}),
             'obs':     forms.Textarea (attrs={'class':'materialize-textarea','rows':5})  ,
         }
-        
 
 
-class FormTeste(ModelForm): 
-    
-    class Meta:
-        model  = Person
-        fields = '__all__'
-        widgets = {
-            'dt_nasc': forms.DateInput(attrs ={'class':'datapicker'}),
-            'obs':     forms.Textarea (attrs={'class':'materialize-textarea','rows':5})       
-        }
-        
 
 
