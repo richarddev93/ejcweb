@@ -1,6 +1,7 @@
 from django.db import models
 
 # Servos.
+
 class Person(models.Model):
     escolhas_nivel = (
         (u'dir_espiritual',u'Diretor Espiritual'),
@@ -17,7 +18,7 @@ class Person(models.Model):
     email=models.EmailField(blank=True,null=True)
     tel1=models.CharField(blank=True,null=True,max_length=13)
     tel2=models.CharField(blank=True,null=True,max_length=13)
-    foto=models.ImageField(blank=True,null=True)
+    foto=models.ImageField(upload_to='profile_picture',blank=True,null=True)
     dt_nasc=models.DateField(blank=True,null=True)
     nivel=models.CharField(blank=True,choices=escolhas_nivel,max_length=30,verbose_name='Nível:')
     ##Endereco##
@@ -28,7 +29,7 @@ class Person(models.Model):
     bairro=models.CharField(max_length=40)
     localidade=models.CharField(max_length=60)
     uf=models.CharField(max_length=2)
-    paroquia=models.ForeignKey('paroquia',on_delete=models.CASCADE,blank=True,null=True)
+    paroquia=models.ForeignKey('paroquia',on_delete=models.PROTECT,blank=True,null=True)
     #controle#
     dtcriacao = models.DateField(auto_now_add=True,blank=False,null=False)
     status  = models.BooleanField(default=True,editable=False)
@@ -44,34 +45,7 @@ class Person(models.Model):
     class Meta:
         verbose_name = ("Servo")
         verbose_name_plural = ("Servos")
-#Equipes
-class Equipe(models.Model):
 
-    escolhas_equipe=(
-        (u'animacao','Animação'),
-        (u'canto','canto'),
-        (u'compras',u'Compras'),
-        (u'cozinha',u'Cozinha'),
-        (u'circulo',u'Círculo'),
-        (u'co_gerais',u'Coord.Gerais'),
-        (u'dirigentes',u'Dirigentes'),
-        (u'espirit',u'Espiritualizador'),
-        (u'interc',u'Intercessão'),
-        (u'lanche',u'Lanche'),
-        (u'faxina',u'FaxinaeLimpeza'),
-        (u'sala',u'Sala'),
-        (u'secretaria',u'Secretaria'),
-        (u'transito',u'OrdemeTrânsito'),
-        (u'visitação',u'Visitação'),
-        )
-
-    escolhas_status=((u'c','Enviado'),(u'r','Recusado'),(u'd','Desistiu'),(u'a','Aceito'),(u's','SemRetornoouContato'),)
-    status_conv=models.CharField(choices=escolhas_status,max_length=30,verbose_name='Status:')
-    nome_equipe=models.CharField(choices=escolhas_equipe,max_length=30,verbose_name='Equipes:')
-    obs = models.CharField(max_length=60,blank=True,null=True)
-
-    def __str__(self):
-        return self.nome_equipe
 #Encontro
 class Encontro(models.Model):
 
@@ -100,3 +74,34 @@ class Paroquia(models.Model):
 
     def __str__(self):
         return self.nome_paroquia
+
+
+#Equipes
+class Equipe(models.Model):
+
+    escolhas_equipe=(
+        (u'animacao','Animação'),
+        (u'canto','canto'),
+        (u'compras',u'Compras'),
+        (u'cozinha',u'Cozinha'),
+        (u'circulo',u'Círculo'),
+        (u'co_gerais',u'Coord.Gerais'),
+        (u'dirigentes',u'Dirigentes'),
+        (u'espirit',u'Espiritualizador'),
+        (u'interc',u'Intercessão'),
+        (u'lanche',u'Lanche'),
+        (u'faxina',u'FaxinaeLimpeza'),
+        (u'sala',u'Sala'),
+        (u'secretaria',u'Secretaria'),
+        (u'transito',u'OrdemeTrânsito'),
+        (u'visitação',u'Visitação'),
+        )
+
+    escolhas_status=((u'c','Enviado'),(u'r','Recusado'),(u'd','Desistiu'),(u'a','Aceito'),(u's','SemRetornoouContato'),)
+    status_conv=models.CharField(choices=escolhas_status,max_length=30,verbose_name='Status:')
+    nome_equipe=models.CharField(choices=escolhas_equipe,max_length=30,verbose_name='Equipes:')
+    obs = models.CharField(max_length=60,blank=True,null=True)
+    servos = models.OneToOneField(Person,on_delete=models.PROTECT,null=True)
+    encontros = models.ForeignKey(Encontro,on_delete=models.PROTECT,null=True)
+    def __str__(self):
+        return self.nome_equipe

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-{% load static %}
-{{% block title %}
+
+{% block title %}
 Novo Servo
 {% endblock title %}}
 {% block content %}
@@ -18,9 +18,8 @@ Novo Servo
                   {{form.nome}}
                 </div>
                 <div class="input-field col m6 s12">
-                  
                   <label for="{{form.sobrenome.id_for_label}}">Sobrenome</label>
-                  {{form.nome}}
+                  {{form.sobrenome}}
                 </div>
               </div>
             <!--Segunda Linha-->  
@@ -33,6 +32,7 @@ Novo Servo
             <!--Terceira Linha--> 
               <div class="row">                  
                 <div class="input-field col m4 s12">
+                  {{ form.dt_nasc.errors }}
                   <label for="{{form.dt_nasc.id_for_label}}">Data de Nascimento</label>
                   {{form.dt_nasc}}
                 </div>
@@ -41,13 +41,8 @@ Novo Servo
                   {{form.apelido}}
                 </div>
                 <div class="input-field col m4 s12">
-                    <select>
-                      <option value="" disabled selected>Escolha a Paróquia</option>
-                      {% for nivel in form.nivel %}
-                        {{nivel}}
-                      {% endfor %}
-                    </select>
-                    <label>Status</label>
+                    {{form.nivel}}
+                    <label for="{{form.nivel.id_for_label}}">Status</label>
                 </div>
               </div>
             <!--Quarta Linha linha-->
@@ -107,13 +102,8 @@ Novo Servo
                     {{form.uf}}
                   </div>
                   <div class="input-field col m5 s12">
-                      <select>
-                        <option value="" disabled selected>Escolha a Paróquia</option>
-                          {% for paroquia in form.paroquia %}
-                            {{paroquia}}
-                          {% endfor %}
-                      </select>
-                      <label>Paróquia</label>
+                      {{form.paroquia}}
+                      <label for="{{form.paroquia.id_for_label}}">Paróquia</label>
                     </div>
               </div>
             <!--Oitava Linha-->      
@@ -129,9 +119,9 @@ Novo Servo
                     <button class="btn-small cyan waves-effect waves-light right" type="submit" >Salvar
                       <i class="material-icons right">send</i>
                     </button> 
-                    <button class="waves-effect waves-light btn-small red darken-1">
+                    <a href = "{% url 'lista' %}" class="waves-effect waves-light btn-small red darken-1">
                       <i class="material-icons left">do_not_disturb</i>
-                      Cancelar</button>
+                      Cancelar</a>
                   </div>
               </div>
 

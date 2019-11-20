@@ -6,6 +6,7 @@ from django.core import serializers
 from .models import Person
 from .forms import newServoForm,FormTeste
 
+
 def home(request):
     return render(request,'home.html')
     
@@ -46,25 +47,28 @@ def consultaBanco(params):
     return data
 
 def novoServo(request):
-    form = newServoForm(request.POST or None)
+    form = newServoForm(request.POST or None, request.FILES or None)
+    # form = FormTeste(request.POST or None, request.FILES or None)
+   
     if form.is_valid():
         form.save()
         return redirect('lista_servos')
-
+    
+    # return render (request,'formTeste.html',{'form': form})
     return render (request,'form_servo.html',{'form': form})
     #return HttpResponse(form)
 
 def atualizaServo(request,id):
     servo = get_object_or_404(Person,pk=id)
     testeObj = servo
-    #form = newServoForm(request.POST or None,instance = servo )
-    form = FormTeste(request.POST or None,instance = servo )
+    form = newServoForm(request.POST or None,instance = servo )
+    # form = FormTeste(request.POST or None, request.FILES or None,instance = servo )
     if form.is_valid():
         form.save()
         return redirect('lista_servos')
 
-    #return render (request,'form_servo.html',{'form': form})
-    return render (request,'formTeste.html',{'form': form})
+    return render (request,'form_servo.html',{'form': form})
+    # return render (request,'formTeste.html',{'form': form})
     
     
     
