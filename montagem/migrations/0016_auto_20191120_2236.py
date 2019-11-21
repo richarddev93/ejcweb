@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='person',
             name='dt_nasc',
-            field=models.DateField(blank=True, default=' __/__/___ ', null=True),
+            field=models.DateField(blank=True, null=True),
         ),
     ]
