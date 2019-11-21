@@ -11,7 +11,9 @@ class newServoForm(ModelForm):
         model  = Person
         fields = '__all__'
         widgets = {
-            'dt_nasc': forms.DateInput(attrs ={'class':'datapicker'}),
+            'tel1': forms.TextInput(attrs={'data-mask':'(00) 00000-0000'}),
+            'tel2': forms.TextInput(attrs={'data-mask':'(00) 00000-0000'}),
+            'dt_nasc': forms.DateInput(attrs ={'class':'datepicker'}),
             'obs':     forms.Textarea (attrs={'class':'materialize-textarea','rows':5})  ,
         }
 

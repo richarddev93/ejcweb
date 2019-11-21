@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% block title %}
+Novo Servo
+{% endblock title %}}
+{% block content %}
+    
+   <div class="col s12 m12 l12">
+      <div id="Form-advance" class="card card card-default scrollspy">
+        <div class="card-content">
+          <h4 class="card-title">Novo Servo</h4>
+          <form method = "Post" class="col s12">
+            {% csrf_token %}
+            <!--Primeira Linha-->
+              <div class="row">
+                <div class="input-field col m6 s12 ">
+                  <label for="{{form.nome.id_for_label}}" >Nome</label>
+                  {{form.nome}}
+                </div>
+                <div class="input-field col m6 s12">
+                  <label for="{{form.sobrenome.id_for_label}}">Sobrenome</label>
+                  {{form.sobrenome}}
+                </div>
+              </div>
+            <!--Segunda Linha-->  
+              <div class="row">
+                <div class="input-field col s12">
+                  <label for="{{form.email.id_for_label}}">Email</label>
+                  {{form.email}}
+                </div>
+              </div>
+            <!--Terceira Linha--> 
+              <div class="row">                  
+                <div class="input-field col m4 s12">
+                  {{ form.dt_nasc.errors }}
+                  <label for="{{form.dt_nasc.id_for_label}}">Data de Nascimento</label>
+                  {{form.dt_nasc}}
+                </div>
+                <div class="input-field col m4 s12">
+                  <label for="{{form.apelido.id_for_label}}">Apelido</label>
+                  {{form.apelido}}
+                </div>
+                <div class="input-field col m4 s12">
+                    {{form.nivel}}
+                    <label for="{{form.nivel.id_for_label}}">Status</label>
+                </div>
+              </div>
+            <!--Quarta Linha linha-->
+              <div class="row">
+                <div class="col m6 s12 file-field input-field">
+                  <div class="waves-effect waves-light btn-small">
+                    <span>Foto</span>
+                    {{form.foto}}
+                  </div>
+                  <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" >
+                  </div>
+                </div>            
+                <div class="input-field col m3 s12">
+                  <label for="{{form.tel1.id_for_label}}" >Telefone 1</label>
+                  {{form.tel1}}
+                </div>
+                <div class="input-field col m3 s12">
+                  <label for="{{form.tel2.id_for_label}}" >Telefone 2</label>
+                  {{form.tel2}}
+                </div>
+              </div>
+            <!--Quinta Linha--> 
+              <div class="row">
+                <div class="input-field col m2 s12">
+                  <label for="{{form.cep.id_for_label}}" >Cep</label>
+                  {{form.cep}}
+                </div>
+                <div class="input-field col m8 s12">
+                  <label for="{{form.logradouro.id_for_label}}" >Endereço</label>
+                  {{form.logradouro}}
+                </div>
+                <div class="input-field col m2 s12">
+                  <label for="{{form.numero.id_for_label}}">Nº</label>
+                  {{form.numero}}
+                </div>
+              </div>
+            <!--Sexta Linha-->
+              <div class="row">            
+                <div class="input-field col m7 s12">
+                  <label for="{{form.complemento.id_for_label}}" >Complemento</label>
+                  {{form.complemento}}
+                </div>
+                <div class="input-field col m5 s12">
+                  <label for="{{form.bairro.id_for_label}}">Bairro</label>
+                  {{form.bairro}}
+                </div>
+              </div>
+            <!--Sétima Linha-->
+              <div class="row">
+                <div class="input-field col m6 s12">
+                    <label for="{{form.localidade.id_for_label}}" >Cidade</label>
+                    {{form.localidade}}
+                  </div>
+                  <div class="input-field col m1 s12">
+                    <label for="{{form.uf.id_for_label}}">UF</label>
+                    {{form.uf}}
+                  </div>
+                  <div class="input-field col m5 s12">
+                      {{form.paroquia}}
+                      <label for="{{form.paroquia.id_for_label}}">Paróquia</label>
+                    </div>
+              </div>
+            <!--Oitava Linha-->      
+              <div class="row">
+                <div class="input-field col s12">
+                  {{form.obs}}
+                  <label for="{{form.obs.id_for_label}}">Observações sobre o servo</label>
+                </div>
+              </div> 
+            <!--Botões --> 
+              <div class="row">
+                  <div class="input-field col s12">
+                    <button class="btn-small cyan waves-effect waves-light right" type="submit" >Salvar
+                      <i class="material-icons right">send</i>
+                    </button> 
+                    <a href = "{% url 'lista' %}" class="waves-effect waves-light btn-small red darken-1">
+                      <i class="material-icons left">do_not_disturb</i>
+                      Cancelar</a>
+                  </div>
+              </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+{% endblock content %}
