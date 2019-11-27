@@ -17,6 +17,17 @@ class newServoForm(ModelForm):
             'obs':     forms.Textarea (attrs={'class':'materialize-textarea','rows':5})  ,
         }
 
+class newParoquiaForm(ModelForm): 
+    
+    class Meta:
+        model  = Paroquia
+        fields = '__all__'
+       
+class newEncontroForm(ModelForm): 
+    
+    class Meta:
+        model  = Encontro
+        fields = '__all__'
 
 
 

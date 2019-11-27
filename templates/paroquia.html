@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block title %}
+Nova Paróquia
+{% endblock title %}}
+{% block content %}
+    
+   <div class=" container col s12 m12 l12">
+      <div id="Form-advance" class="card card card-default scrollspy">
+        <div class="card-content">
+          Nova Paroquia
+          <form method = "Post" class="col s12">
+            {% csrf_token %}
+            <!--Primeira Linha-->
+              <div class="row">
+                <div class="input-field col m6 s5">
+                  <label for="{{form.nome_paroquia.id_for_label}}" >Paróquia</label>
+                  {{form.nome_paroquia}}
+                </div>
+                <div class="input-field col m5 s5">
+                  <label for="{{form.regiao.id_for_label}}">Região</label>
+                  {{form.regiao}}
+                </div>
+                <div class="input-field col m1 s1">
+                    <button class="btn-small cyan waves-effect waves-light " type="submit" >
+                      <i class="material-icons ">add</i>
+                    </button> 
+                  </div>
+              </div>
+          </form>
+        </div>
+      </div>
+      <!--Lista de Paroquias-->
+      <div id="Form-advance" class="card card card-default scrollspy">
+        <div class="card-content">
+          <div class="col s12 m12 l12">
+              <!-- CAMPO DE BUSCA-->
+              <div class="row">
+                  <div class="input-field col s12">
+                      <form method="get">
+                          <i class="material-icons prefix">search</i>
+                          <input type ="text" class ="form-control" name="busca" placeholder ="Buscar Paróquias" >
+                      </form>
+                  </div>
+              </div>
+              <!--PAINEL DE ORDENAÇÃO-->
+              <panel class = "panel panel-default">
+                  <div class = "panel-body">
+                      <form method="get">
+                          <div class = "btn-group" role = "group">
+                              {% with cat=request.GET.ordenar %}
+                                  <button type="submit" class="btn btn-small waves-effect waves-light  {% if cat == 'nome_paroquia' %} disabled {% endif %}" name="ordenar" value="nome">Nome A-Z</button>
+                                  <button type="submit" class="btn btn-small waves-effect waves-light  {% if cat == '-nome_paroquia' %} disabled {% endif %}" name="ordenar" value="-nome">Nome Z-A</button>
+                                  <a  href = "{% url 'new_paroquia' %}"class="btn-floating btn-small waves-effect waves-light  right"><i class="material-icons">add</i></a>
+                              {% endwith %}
+                          </div>
+                      </form>
+                  </div>
+              </panel>
+              <!--Lista de paroquias-->
+              <table class="table">
+                  <thead>
+                      <th>Paróquia</th>
+                      <th>Região</th>
+                  </thead>
+
+                  <tbody>
+                      {% for paroquia in paroquias %}
+                          <tr>
+                              <td>{{ paroquia.nome_paroquia}}</td>
+                              <td>{{ paroquia.regiao }}</td>
+                              <td>
+                                  <a href="{% url 'upd_paroquia' paroquia.pk %}" ><i class= "material-icons">mode_edit</i></a>
+                                  <a href=" {% url 'del_paroquia' paroquia.pk %}" ><i class= "material-icons">delete</i></a>
+                              </td>
+                          </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+              <!--Paginação-->
+              <div class ="pagination">
+                  <span class = "step-links">
+                      {% if paroquias.has_previous %}
+                          <a href ="?page={{paroquias.previous_page_number}}">Anterior</a>
+                      {% endif %}   
+
+                      <span class = "step-links">
+                          Página {{paroquias.number}} de {{paroquias.paginator.num_pages}}.
+                      </span>
+                      {% if  paroquias.has_next%}
+                          <a href ="?page={{paroquias.next_page_number}}">Próxima</a>
+                      {% endif %}  
+
+                  </span>
+              </div>
+          </div>  
+        </div>
+      </div>
+   </div>
+{% endblock content %}

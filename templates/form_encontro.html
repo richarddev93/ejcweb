@@ -1,67 +1,51 @@
 {% extends 'base.html' %}
 {% block title %}
-Novo Servo
+Novo Encontro
 {% endblock title %}}
 {% block content %}
     
    <div class=" container col s12 m12 l12">
       <div id="Form-advance" class="card card card-default scrollspy">
         <div class="card-content">
-          <h4 class="card-title">Novo Servo</h4>
+          <h4 class="card-title">Novo Encontro</h4>
           <form method = "Post" class="col s12">
             {% csrf_token %}
             <!--Primeira Linha-->
               <div class="row">
                 <div class="input-field col m6 s12 ">
-                  <label for="{{form.nome.id_for_label}}" >Nome</label>
-                  {{form.nome}}
+                  <label for="{{form.ano.id_for_label}}" >Ano do Encontro</label>
+                  {{form.ano}}
                 </div>
                 <div class="input-field col m6 s12">
-                  <label for="{{form.sobrenome.id_for_label}}">Sobrenome</label>
-                  {{form.sobrenome}}
+                  <label for="{{form.tema.id_for_label}}">Tema</label>
+                  {{form.tema}}
                 </div>
               </div>
             <!--Segunda Linha-->  
               <div class="row">
                 <div class="input-field col s12">
-                  <label for="{{form.email.id_for_label}}">Email</label>
-                  {{form.email}}
+                  <label for="{{form.local.id_for_label}}">Local</label>
+                  {{form.local}}
                 </div>
               </div>
             <!--Terceira Linha--> 
               <div class="row">                  
                 <div class="input-field col m4 s12">
-                  {{ form.dt_nasc.errors }}
-                  <label for="{{form.dt_nasc.id_for_label}}">Data de Nascimento</label>
-                  {{form.dt_nasc}}
+                  {{ form.dt_ini.errors }}
+                  <label for="{{form.dt_ini.id_for_label}}">Ínicio</label>
+                  {{form.dt_ini}}
                 </div>
                 <div class="input-field col m4 s12">
-                  <label for="{{form.apelido.id_for_label}}">Apelido</label>
-                  {{form.apelido}}
-                </div>
-                <div class="input-field col m4 s12">
-                    {{form.nivel}}
-                    <label for="{{form.nivel.id_for_label}}">Status</label>
+                  {{ form.dt_fim.errors }}
+                  <label for="{{form.dt_fim.id_for_label}}">Final</label>
+                  {{form.dt_fim}}
                 </div>
               </div>
             <!--Quarta Linha linha-->
               <div class="row">
-                <div class="col m6 s12 file-field input-field">
-                  <div class="waves-effect waves-light btn-small">
-                    <span>Foto</span>
-                    {{form.foto}}
-                  </div>
-                  <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text" >
-                  </div>
-                </div>            
-                <div class="input-field col m3 s12">
-                  <label for="{{form.tel1.id_for_label}}" >Telefone 1</label>
-                  {{form.tel1}}
-                </div>
-                <div class="input-field col m3 s12">
-                  <label for="{{form.tel2.id_for_label}}" >Telefone 2</label>
-                  {{form.tel2}}
+                <div class="input-field col s12">
+                  {{form.desc}}
+                  <label for="{{form.desc.id_for_label}}">Descrição do Encontro</label>
                 </div>
               </div>
             <!--Quinta Linha--> 
@@ -100,18 +84,8 @@ Novo Servo
                     <label for="{{form.uf.id_for_label}}">UF</label>
                     {{form.uf}}
                   </div>
-                  <div class="input-field col m5 s12">
-                      {{form.paroquia}}
-                      <label for="{{form.paroquia.id_for_label}}">Paróquia</label>
-                    </div>
               </div>
-            <!--Oitava Linha-->      
-              <div class="row">
-                <div class="input-field col s12">
-                  {{form.obs}}
-                  <label for="{{form.obs.id_for_label}}">Observações sobre o servo</label>
-                </div>
-              </div> 
+
             <!--Botões --> 
               <div class="row">
                   <div class="input-field col s12">

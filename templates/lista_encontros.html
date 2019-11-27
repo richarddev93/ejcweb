@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Encontros
+{% endblock title %}
+
+{% block content %}
+
+<div class="row ">
+     <!-- CAMPO DE BUSCA-->
+    <div class="col s3 m3 l3">
+        <div class = "col s12 m12 l12">
+            <form method="get">
+                <div class = "col-lg-12">
+                    <div ="input-group">
+                        <input type ="text" class ="form-control" name="busca" placeholder ="Buscar Encontro" >
+                        <span class ="input-group-btn">
+                            <button class ="btn btn-default" type = "submit" >Pesquisa</button>
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    
+        <div class="col s9 m9 l9">
+             <div id="Form-advance" class="card card card-default scrollspy">
+                <div class="card-content">
+                    <!--Campo de Busca-->
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <form method="get">
+                                <i class="material-icons prefix">search</i>
+                                <input type ="text" class ="form-control" name="busca" placeholder ="Buscar Encontro" >
+                            </form>
+                        </div>
+                    </div>
+                    <!--PAINEL DE ORDENAÇÃO-->
+                    <panel class = "panel panel-default">
+                        <div class = "panel-body">
+                            <form method="get">
+                                <div class = "btn-group" role = "group">
+                                    {% with cat=request.GET.ordenar %}
+                                        <button type="submit" class="btn btn-small waves-effect waves-light  {% if cat == 'ano' %} disabled {% endif %}" name="ordenar" value="nome">Nome A-Z</button>
+                                        <button type="submit" class="btn btn-small waves-effect waves-light  {% if cat == '-ano' %} disabled {% endif %}" name="ordenar" value="-nome">Nome Z-A</button>
+                                        <a href = "{% url 'new_encontro' %}"class="btn-floating btn-small waves-effect waves-light  right"><i class="material-icons">add</i></a>
+                                    {% endwith %}
+                                </div>
+                            </form>
+                        </div>
+
+                    </panel>
+                    <!--Lista de Servos-->
+                    <table class="table">
+                        <thead>
+
+                            <th>Ano</th>
+                            <th>Ínicio</th>
+                            <th>Final</th>
+                            <th>Tema</th>
+                            <th>Ação</th>
+
+                        </thead>
+
+                        <tbody>
+                            {% for encontro in encontros %}
+                                <tr>
+                                 
+                                    <td>{{ encontro.ano}}</td>
+                                    <td>{{ encontro.dt_ini }}</td>
+                                    <td>{{ encontro.dt_fim }}</td>
+                                    <td>{{ encontro.tema}}</td>
+                                    <td>
+                                        <a href="{% url 'upd_encontro' encontro.pk %}" ><i class= "material-icons">mode_edit</i></a>
+                                        <a href="{% url 'del_encontro' encontro.pk %}" ><i class= "material-icons">delete</i></a>
+                                    </td>
+                                    
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                        <!--Paginação-->
+                    <div class ="pagination">
+                        <span class = "step-links">
+                            {% if encontros.has_previous %}
+                                <a href ="?page={{servos.previous_page_number}}">Anterior</a>
+                            {% endif %}   
+
+                            <span class = "step-links">
+                                Página {{encontros.number}} de {{encontros.paginator.num_pages}}.
+                            </span>
+                            {% if  encontros.has_next%}
+                                <a href ="?page={{encontros.next_page_number}}">Próxima</a>
+                            {% endif %}  
+
+                        </span>
+                    </div>
+                </div>    
+            </div>
+        </div>
+    
+</div>
+{% endblock content %}

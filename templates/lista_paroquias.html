@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Paróquias
+{% endblock title %}
+
+{% block content %}
+    <div class="col s12 m12 l12">
+        <!-- CAMPO DE BUSCA-->
+        <div class = 'row'>
+            <form method="get">
+                <div class = "col-lg-12">
+                    <div ="input-group">
+                        <input type ="text" class ="form-control" name="busca" placeholder ="Buscar paroquia" >
+                        <span class ="input-group-btn">
+                            <button class ="btn btn-default" type = "submit" >Pesquisa</button>
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--PAINEL DE ORDENAÇÃO-->
+        <panel class = "panel panel-default">
+            <div class = "panel-heading">
+                <h2 class="panel-title">Ordenar</h2>
+            </div>
+            <div class = "panel-body">
+                <form method="get">
+                    <div class = "btn-group" role = "group">
+                        {% with cat=request.GET.ordenar %}
+                            <button type="submit" class="btn btn-small waves-effect waves-light  {% if cat == 'nome_paroquia' %} disabled {% endif %}" name="ordenar" value="nome">Nome A-Z</button>
+                            <button type="submit" class="btn btn-small waves-effect waves-light  {% if cat == '-nome_paroquia' %} disabled {% endif %}" name="ordenar" value="-nome">Nome Z-A</button>
+                            <a  href = "{% url 'new_paroquia' %}"class="btn-floating btn-small waves-effect waves-light  right"><i class="material-icons">add</i></a
+                        {% endwith %}
+                    </div>
+                </form>
+            </div>
+
+        </panel>
+        <!--Lista de paroquias-->
+        <table class="table">
+            <thead>
+                <th>Paróquia</th>
+                <th>Região</th>
+            </thead>
+
+            <tbody>
+                {% for paroquia in paroquias %}
+                    <tr>
+                        <td>{{ paroquia.nome_paroquia}}</td>
+                        <td>{{ paroquia.regiao }}</td>
+                        <td>
+                            <a href="{% url 'upd_paroquia' paroquia.pk %}" ><i class= "material-icons">mode_edit</i></a>
+                            <a href=" {% url 'del_paroquia' paroquia.pk %}" ><i class= "material-icons">delete</i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!--Paginação-->
+        <div class ="pagination">
+            <span class = "step-links">
+                {% if paroquias.has_previous %}
+                    <a href ="?page={{paroquias.previous_page_number}}">Anterior</a>
+                {% endif %}   
+
+                <span class = "step-links">
+                    Página {{paroquias.number}} de {{paroquias.paginator.num_pages}}.
+                </span>
+                {% if  paroquias.has_next%}
+                    <a href ="?page={{paroquias.next_page_number}}">Próxima</a>
+                {% endif %}  
+
+            </span>
+        </div>
+    </div>   
+{% endblock content %}

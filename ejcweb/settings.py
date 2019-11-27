@@ -25,7 +25,7 @@ SECRET_KEY = 'l(ba@0@md6&*9xjtpo3nn7)no-3(8!9i8=9i%!u^ny5u28curk'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost','187.109.37.68']
 
 
 # Application definition
@@ -74,23 +74,23 @@ WSGI_APPLICATION = 'ejcweb.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'ejcweb',
-#         'USER' : 'postgres',
-#         'PASSWORD': 'admin',
-#         'HOST' : 'localhost',
-#         'PORT' : ''
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ejcweb',
+        'USER' : 'userejc',
+        'PASSWORD': 'admin',
+        'HOST' : 'localhost',
+        'PORT' : ''
+    }
+}
 
 
 # Password validation
