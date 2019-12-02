@@ -37,7 +37,7 @@
         <li><a href="#!">Lista de Compras</a></li>
       </ul>
  
-        <nav class="gradient-45deg-purple-deep-orange gradient-shadow" >
+        <nav class="deep-purple" >
           <div class="nav-wrapper" >
             <a href="{% url 'home' %}" class=" right brand-logo">EJC HELIPA</a>
             <ul class="left hide-on-med-and-down">
@@ -57,7 +57,7 @@
         {% block content %}
         {% endblock content %}
       </div>
-      <footer class="page-footer">
+      <footer class="page-footer deep-purple ">
           <div class="container">
             <div class="row">
               <div class="col l6 s12">
@@ -103,6 +103,23 @@
           format: 'dd/mm/yyyy' //outras configurações
         }
         $('.datepicker').datepicker(options); //jQuery init
+        $('.modal').modal();
+        
+        {% comment %} mostrar o form {% endcomment %}
+        {% comment %} $('.show-form').click(function(){
+          $.ajax({
+            url:'novaparoquia/',
+            type:'get',
+            datatype:'json',
+            beforeSend: function(){
+               $('#modal-paroquia').modal('.show')
+            },
+            success:function(data){
+              $('#modal-paroquia .modal-content').html('data.html_form')
+            }
+
+          })
+        }) {% endcomment %}
       </script>
       <!--MASCARAS-->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>

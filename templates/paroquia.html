@@ -5,30 +5,11 @@ Nova Paróquia
 {% block content %}
     
    <div class=" container col s12 m12 l12">
-      <div id="Form-advance" class="card card card-default scrollspy">
+      {% comment %} <div id="Form-advance" class="card card card-default scrollspy">
         <div class="card-content">
-          Nova Paroquia
-          <form method = "Post" class="col s12">
-            {% csrf_token %}
-            <!--Primeira Linha-->
-              <div class="row">
-                <div class="input-field col m6 s5">
-                  <label for="{{form.nome_paroquia.id_for_label}}" >Paróquia</label>
-                  {{form.nome_paroquia}}
-                </div>
-                <div class="input-field col m5 s5">
-                  <label for="{{form.regiao.id_for_label}}">Região</label>
-                  {{form.regiao}}
-                </div>
-                <div class="input-field col m1 s1">
-                    <button class="btn-small cyan waves-effect waves-light " type="submit" >
-                      <i class="material-icons ">add</i>
-                    </button> 
-                  </div>
-              </div>
-          </form>
+              <button data-target="modal-paroquia" class="btn-small modal-trigger show-form"><i class= "material-icons">add</i> Nova Paróquia</button>
         </div>
-      </div>
+      </div> {% endcomment %}
       <!--Lista de Paroquias-->
       <div id="Form-advance" class="card card card-default scrollspy">
         <div class="card-content">
@@ -96,4 +77,9 @@ Nova Paróquia
         </div>
       </div>
    </div>
+   {% comment %} <div class="modal fade" id ="modal-paroquia">
+    <div class = "modal-dialog">
+        <div class ="modal-content"></div>
+    </div>
+   </div> {% endcomment %}
 {% endblock content %}

@@ -3,7 +3,10 @@ from django.core import paginator
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from django.http.response import HttpResponse
 from django.core import serializers
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 from .models import Person,Paroquia,Encontro
+
 from .forms import newServoForm,newParoquiaForm,newEncontroForm
 
 
@@ -112,16 +115,23 @@ def consultaBanco1(params):
 
 def novaParoquia(request):
     form = newParoquiaForm(request.POST or None)
+    # context = {
+    #     'form':form
+    # }
+    # html_form = render_to_string('formpar.html',context,request=request)
+    # return JsonResponse({'html_form':html_form})
+
     if form.is_valid():
         form.save()
         return redirect('lista_paroquias')
     
-    return render (request,'paroquia.html',{'form': form})
+    return render (request,'formpar.html',{'form': form})
     #return HttpResponse(form)
 
 def atualizaParoquia(request,id):
     paroquia = get_object_or_404(Paroquia,pk=id)
     form = newParoquiaForm(request.POST or None,instance = paroquia )
+    
     if form.is_valid():
         form.save()
         return redirect('lista_paroquias')

@@ -81,7 +81,8 @@ class Equipe(models.Model):
 
     escolhas_equipe=(
         (u'animacao','Animação'),
-        (u'canto','canto'),
+        (u'espera','Espera'),
+        (u'canto','Canto'),
         (u'compras',u'Compras'),
         (u'cozinha',u'Cozinha'),
         (u'circulo',u'Círculo'),
@@ -90,18 +91,34 @@ class Equipe(models.Model):
         (u'espirit',u'Espiritualizador'),
         (u'interc',u'Intercessão'),
         (u'lanche',u'Lanche'),
-        (u'faxina',u'FaxinaeLimpeza'),
+        (u'faxina',u'Faxina e Limpeza'),
         (u'sala',u'Sala'),
         (u'secretaria',u'Secretaria'),
-        (u'transito',u'OrdemeTrânsito'),
+        (u'transito',u'Ordem e Trânsito'),
         (u'visitação',u'Visitação'),
         )
 
-    escolhas_status=((u'c','Enviado'),(u'r','Recusado'),(u'd','Desistiu'),(u'a','Aceito'),(u's','SemRetornoouContato'),)
-    status_conv=models.CharField(choices=escolhas_status,max_length=30,verbose_name='Status:')
     nome_equipe=models.CharField(choices=escolhas_equipe,max_length=30,verbose_name='Equipes:')
+    ano = models.IntegerField()
     obs = models.CharField(max_length=60,blank=True,null=True)
-    servos = models.OneToOneField(Person,on_delete=models.PROTECT,null=True)
-    encontros = models.ForeignKey(Encontro,on_delete=models.PROTECT,null=True)
+    #membs = models.ForeignKey(Person,on_delete=models.PROTECT)
+    encontro = models.ForeignKey(Encontro,on_delete=models.PROTECT)
+
     def __str__(self):
-        return self.nome_equipe
+        return self.nome_equipe 
+
+
+class Membros(models.Model):
+    opcoes_status=((u'a','Aguardando Convite'),(u'e','Convite Enviado'),(u'r','Convite Recusado'),(u'd','Desistiu'),(u'a','Aceito'),(u's','Sem Retorno'),)
+
+    # person = models.ForeignKey(Person, on_delete=models.PROTECT)
+    person = models.OneToOneField(Person, on_delete=models.PROTECT)
+    equipe = models.ForeignKey(Equipe,on_delete=models.PROTECT)
+    #equipe = models.OneToOneField(Equipe,on_delete=models.PROTECT)
+    dt_convite = models.DateField()
+    status_conv=models.CharField(choices=opcoes_status,max_length=1,verbose_name='Status:',default='Aguardando Convite')
+
+    def __str__(self):
+        return self.person.nome
+    
+

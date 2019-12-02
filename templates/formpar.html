@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}
+Novo Servo
+{% endblock title %}}
+{% block content %}
+<div class=" container col s12 m12 l12">
+    <div id="Form-advance" class="card card card-default scrollspy">
+        <div class="card-content">
+            <h5 class="card-title">Nova Paróquia</h5>
+            <form method = "Post" class="create-form" {% url 'new_paroquia' %}>
+                {% csrf_token %}
+                    {% comment %} <div class="model-header">
+                        <h5 class ="modal-title">Cadastrar Paróquia</h5>
+                        <button type ="button" class ="close" data-dismiss ="modal" aria-label = "Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{form}}
+                    </div>
+                    <div class = "modal-footer">
+                        <button class="btn-small cyan waves-effect waves-light " type="submit" >
+                        <i class="material-icons ">add</i>
+                        </button> 
+                    </div>
+                    {% endcomment %}
+
+                <!--Primeira Linha-->
+
+                <div class="row">
+                    <div class="input-field col m6 s5">
+                    <label for="{{form.nome_paroquia.id_for_label}}" >Paróquia</label>
+                    {{form.nome_paroquia}}
+                    </div>
+                    <div class="input-field col m5 s5">
+                    <label for="{{form.regiao.id_for_label}}">Região</label>
+                    {{form.regiao}}
+                    </div>
+                </div> 
+                <div class="row">
+                    <div class="input-field col s12">
+                        <button class="btn-small cyan waves-effect waves-light right" type="submit" >Salvar
+                        <i class="material-icons right">send</i>
+                        </button> 
+                        <a href = "{% url 'lista_paroquias' %}" class="waves-effect waves-light btn-small red darken-1">
+                        <i class="material-icons left">do_not_disturb</i>
+                        Cancelar</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
