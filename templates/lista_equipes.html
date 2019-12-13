@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Servos
+{% endblock title %}
+
+{% block content %}
+
+<div class="row ">
+     <!-- sidebar-->
+    <div class="col s3 m3 l3">
+       
+                <div class="sidebar-left sidebar-fixed">
+                    <div class="sidebar">
+                        <div class="sidebar-content">
+                        <div class="sidebar-header">
+                            <div class="sidebar-details">
+                            <h5 class="m-0 sidebar-title"><i class="material-icons app-header-icon text-top">perm_identity</i> Equipes
+                            </h5>
+                            <div class="mt-10 pt-2">
+                                <p class="m-0 subtitle font-weight-700">Total de Equipes</p>
+                                <p class="m-0 text-muted">{{forms.equipe.len}}</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div id="Form-advance" class="card card card-default scrollspy">
+                            <div class="card-content">
+                                <div id="sidebar-list" class="sidebar-menu list-group position-relative animate fadeLeft delay-1 ps ps--active-y">
+                                    <div class="sidebar-list-padding app-sidebar" id="contact-sidenav">
+                                    <ul class="contact-list display-grid">
+                                        <li class="sidebar-title">Filters</li>
+                                        <li class="active"><a href="#!" class="text-sub"><i class="material-icons mr-2"> perm_identity </i> All
+                                            Contact</a></li>
+                                        <li><a href="#!" class="text-sub"><i class="material-icons mr-2"> history </i> Frequent</a></li>
+                                        <li><a href="#!" class="text-sub"><i class="material-icons mr-2"> star_border </i> Starred Contacts</a></li>
+                                        <li class="sidebar-title">Options</li>
+                                        <li><a href="#!" class="text-sub"><i class="material-icons mr-2"> keyboard_arrow_down </i> Import</a></li>
+                                        <li><a href="#!" class="text-sub"><i class="material-icons mr-2"> keyboard_arrow_up </i> Export</a></li>
+                                        <li><a href="#!" class="text-sub"><i class="material-icons mr-2"> print </i> Print</a></li>
+                                        <li class="sidebar-title">Department</li>
+                                        <li><a href="#!" class="text-sub"><i class="purple-text material-icons small-icons mr-2">
+                                            fiber_manual_record </i> Engineering</a></li>
+                                        <li><a href="#!" class="text-sub"><i class="amber-text material-icons small-icons mr-2">
+                                            fiber_manual_record </i> Sales</a></li>
+                                        <li><a href="#!" class="text-sub"><i class="light-green-text material-icons small-icons mr-2">
+                                            fiber_manual_record </i> Support</a></li>
+                                    </ul>
+                                    </div>
+                                <div class="ps__rail-x" style="left: 0px; bottom: -8px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 8px; height: 675px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 8px; height: 667px;"></div></div></div>
+                                <a href="#" data-target="contact-sidenav" class="sidenav-trigger hide-on-large-only"><i class="material-icons">menu</i></a>
+                            </div>
+                         </div>
+                    </div>
+                 </div>
+        </div>
+    </div>
+    
+        <div class="col s9 m9 l9">
+             <div id="Form-advance" class="card card card-default scrollspy">
+                <div class="card-content">
+                    <!--Campo de Busca-->
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <form method="get">
+                                <i class="material-icons prefix">search</i>
+                                <input type ="text" class ="form-control" name="busca" placeholder ="Buscar Equipe" >
+                            </form>
+                        </div>
+                    </div>
+                    <!--PAINEL DE ORDENAÇÃO-->
+                    <panel class = "panel panel-default">
+                        <div class = "panel-body">
+                            <form method="get">
+                                <div class = "btn-group" role = "group">
+                                    {% with cat=request.GET.ordenar %}
+                                        <button type="submit" class="btn btn-small waves-effect waves-light  {% if cat == 'nome' %} disabled {% endif %}" name="ordenar" value="nome">Nome A-Z</button>
+                                        <button type="submit" class="btn btn-small waves-effect waves-light  {% if cat == '-nome' %} disabled {% endif %}" name="ordenar" value="-nome">Nome Z-A</button>
+                                        <button type="submit" class="btn btn-small waves-effect waves-light  {% if cat == 'dtcriacao' %} disabled {% endif %}"   name="ordenar" value="dtcriacao">Mais antigos</button>
+                                        <button type="submit" class="btn btn-small waves-effect waves-light   {% if cat == '-dtcriacao' %} disabled {% endif %}"  name="ordenar" value="-dtcriacao">Mais novos</button>
+                                        <a href = "{% url 'new_equipe' %}"class="btn-floating btn-small waves-effect waves-light  right"><i class="material-icons">add</i></a>
+                                    {% endwith %}
+                                </div>
+                            </form>
+                        </div>
+
+                    </panel>
+                    <!--Lista de Servos-->
+                    <table class="table">
+                        <thead>
+
+                            <th>*</th>
+                            <th>Nome</th>
+                            <th>Sobrenome</th>
+                            <th>Equipe</th>
+                            <th>Paróquia</th>
+                            <th>Ação</th>
+
+                        </thead>
+
+                        <tbody>
+                            {% for servo in servos %}
+                                <tr>
+                                    <td>
+                                        <div class = "thumbnail" >
+                                        {% if servo.foto %}
+                                        <img class="responsive-img z-depth-4" height ="20" width ='45'  src="{{ servo.foto.url }}" >
+                                        {% endif %}
+                                        </div>
+                                    </td>
+                                    <td>{{ servo.nome}}</td>
+                                    <td>{{ servo.sobrenome }}</td>
+                                    <td>equipe</td>
+                                    <td>{{ servo.paroquia}}</td>
+                                    <td>
+                                        <a href="{% url 'upd_servo' servo.pk %}" ><i class= "material-icons">mode_edit</i></a>
+                                        <a href=" {% url 'del_servo' servo.pk %}" ><i class= "material-icons">delete</i></a>
+                                    </td>
+                                    
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                        <!--Paginação-->
+                    <div class ="pagination">
+                        <span class = "step-links">
+                            {% if servos.has_previous %}
+                                <a href ="?page={{servos.previous_page_number}}">Anterior</a>
+                            {% endif %}   
+
+                            <span class = "step-links">
+                                Página {{servos.number}} de {{servos.paginator.num_pages}}.
+                            </span>
+                            {% if  servos.has_next%}
+                                <a href ="?page={{servos.next_page_number}}">Próxima</a>
+                            {% endif %}  
+
+                        </span>
+                    </div>
+                </div>    
+            </div>
+        </div>
+    
+</div>
+{% endblock content %}

@@ -101,7 +101,7 @@ class Equipe(models.Model):
     nome_equipe=models.CharField(choices=escolhas_equipe,max_length=30,verbose_name='Equipes:')
     ano = models.IntegerField()
     obs = models.CharField(max_length=60,blank=True,null=True)
-    #membs = models.ForeignKey(Person,on_delete=models.PROTECT)
+    membs = models.ForeignKey(Person,on_delete=models.PROTECT)
     encontro = models.ForeignKey(Encontro,on_delete=models.PROTECT)
 
     def __str__(self):
