@@ -6,13 +6,14 @@ from django.core import serializers
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from .models import Person,Paroquia,Encontro
-
+from django.contrib.auth.decorators import login_required
 from .forms import newServoForm,newParoquiaForm,newEncontroForm
 
-
+@login_required
 def home(request):
     return render(request,'home.html')
-    
+
+@login_required    
 def listaServos(request):
     serial = False    
     query = request.GET.get("busca",'')
@@ -34,7 +35,8 @@ def listaServos(request):
 
     elif request.method == 'POST':
         return HttpResponse ("Logo faz algo")
-    
+
+ 
 def consultaBanco(params):
     if params[0] == True:
          data = serializers.serialize("json", Person.objects.all())
@@ -46,6 +48,7 @@ def consultaBanco(params):
          data = Person.objects.all()
     return data
 
+@login_required
 def novoServo(request):
     form = newServoForm(request.POST or None, request.FILES or None)
     # form = FormTeste(request.POST or None, request.FILES or None)
@@ -58,6 +61,7 @@ def novoServo(request):
     return render (request,'form_servo.html',{'form': form})
     #return HttpResponse(form)
 
+@login_required
 def atualizaServo(request,id):
     servo = get_object_or_404(Person,pk=id)
     testeObj = servo
@@ -67,7 +71,8 @@ def atualizaServo(request,id):
         return redirect('lista_servos')
 
     return render (request,'form_servo.html',{'form': form})
-    
+
+@login_required    
 def removeServo(request,id):
     servo = get_object_or_404(Person,pk=id)
     form = newServoForm(request.POST or None,instance =servo)
@@ -79,7 +84,7 @@ def removeServo(request,id):
     return render( request,'confirm_delete.html',{'object':servo})
 
 ##Defs da Paróquia
-
+@login_required
 def listaParoquias(request):
     serial = False    
     query = request.GET.get("busca",'')
@@ -102,6 +107,7 @@ def listaParoquias(request):
 
     return render(request,'paroquia.html',{'paroquias':paroquias,'form': form })
 
+
 def consultaBanco1(params):
     if params[0] == True:
          data = serializers.serialize("json", Paroquia.objects.all())
@@ -113,6 +119,7 @@ def consultaBanco1(params):
          data = Paroquia.objects.all()
     return data
 
+@login_required
 def novaParoquia(request):
     form = newParoquiaForm(request.POST or None)
     # context = {
@@ -128,6 +135,7 @@ def novaParoquia(request):
     return render (request,'formpar.html',{'form': form})
     #return HttpResponse(form)
 
+@login_required
 def atualizaParoquia(request,id):
     paroquia = get_object_or_404(Paroquia,pk=id)
     form = newParoquiaForm(request.POST or None,instance = paroquia )
@@ -137,7 +145,8 @@ def atualizaParoquia(request,id):
         return redirect('lista_paroquias')
 
     return render (request,'paroquia.html',{'form': form})
-    
+
+@login_required    
 def removeParoquia(request,id):
     paroquia = get_object_or_404(Paroquia,pk=id)
     form = newServoForm(request.POST or None,instance =paroquia)
@@ -149,7 +158,7 @@ def removeParoquia(request,id):
     return render( request,'confirm_delete.html',{'object':paroquia})
 
 ##Defs da Encontro
-
+@login_required
 def listaEncontros(request):
     serial = False    
     query = request.GET.get("busca",'')
@@ -168,6 +177,7 @@ def listaEncontros(request):
 
     return render(request,'lista_encontros.html',{'encontros':encontros })
 
+
 def consultaBanco2(params):
     if params[0] == True:
          data = serializers.serialize("json", Encontro.objects.all())
@@ -179,6 +189,7 @@ def consultaBanco2(params):
          data = Encontro.objects.all()
     return data
 
+@login_required
 def novoEncontro(request):
     form = newEncontroForm(request.POST or None, request.FILES or None)
     
@@ -188,6 +199,7 @@ def novoEncontro(request):
 
     return render (request,'form_encontro.html',{'form': form})
 
+@login_required
 def atualizaEncontro(request,id):
     encontro = get_object_or_404(Encontro,pk=id)
     form = newEncontroForm(request.POST or None,instance = encontro )
@@ -196,7 +208,8 @@ def atualizaEncontro(request,id):
         return redirect('lista_encontros')
 
     return render (request,'form_encontro.html',{'form': form})
-    
+
+@login_required    
 def removeEncontro(request,id):
     encontro = get_object_or_404(Encontro,pk=id)
     form = newServoForm(request.POST or None,instance =encontro)

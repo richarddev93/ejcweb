@@ -36,10 +36,17 @@
         <li><a href="#!">Lista de Materiais</a></li>
         <li><a href="#!">Lista de Compras</a></li>
       </ul>
+
+       <ul id="dropdown_cont" class="dropdown-content">
+        <li><a href="/accounts/logout">Sair</a></li>
+        </ul>
  
         <nav class="deep-purple" >
           <div class="nav-wrapper" >
-            <a href="{% url 'home' %}" class=" right brand-logo">EJC HELIPA</a>
+            {% comment %} <a href="{% url 'home' %}" class=" right brand-logo">EJC HELIPA</a> {% endcomment %}
+            <ul class="right hide-on-med-and-down">
+              <li><a class='dropdown-trigger ' href='#' data-target='dropdown_cont'>Minha Conta</a></li>
+            </ul>
             <ul class="left hide-on-med-and-down">
               <li><a class='dropdown-trigger ' href='#' data-target='dropdown_cad'>Cadastros</a></li>
               <li><a class='dropdown-trigger ' href='#' data-target='dropdown_rot'>Roteiros</a></li>

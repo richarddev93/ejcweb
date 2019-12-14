@@ -16,7 +16,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG',default=False,cast=bool)
 
 # ALLOWED_HOSTS = ['localhost','187.109.37.68','127.0.0.1']
-ALLOWED_HOSTS = ['ejcweb.herokuapp.com']
+ALLOWED_HOSTS = ['ejcweb.herokuapp.com','127.0.0.1:8000','localhost','127.0.0.1']
 
 
 # Application definition
@@ -112,4 +112,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 MEDIA_URL ='/media/'
 
 MEDIA_ROOT ='media'
+
+
+#configuração de Login
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/accounts/login'
 
