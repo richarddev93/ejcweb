@@ -8,7 +8,7 @@ Novo Servo
   <div id="Form-advance" class="card card card-default scrollspy">
     <div class="card-content">
       <h4 class="card-title">Novo Servo</h4>
-      <form method = "Post" class="col s12">
+      <form method = "Post"  enctype ="multipart/form-data" class="col s12">
         {% csrf_token %}
         <!--Primeira Linha-->
           <div class="row">
@@ -129,3 +129,4 @@ Novo Servo
   </div>
 </div>
 {% endblock content %}
+

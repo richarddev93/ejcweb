@@ -5,11 +5,49 @@ from django.http.response import HttpResponse
 from django.core import serializers
 from django.http import JsonResponse
 from django.template.loader import render_to_string
-from .models import Equipe,Membros
+from .models import Equipe,Membros,Person
 
 from .forms import newServoForm,newParoquiaForm,newEncontroForm
 
-def listaEquipes(request):
+def lista_equipes(request):
+
+    data = Membros.objects.all()
+    list_equipe = list()
+    list_membros=[5]
+    for membro in data:
+        
+        servo  = Person.objects.get(id=membro.person_id)
+        equipe_servo = Equipe.objects.get(id=membro.equipe_id) 
+
+        if membro.status_conv == 'a':
+            status = 'Aceito'
+        elif membro.status_conv == 'ac':
+            status = 'Aguardando Envio'
+        elif membro.status_conv == 'e':
+            status = 'Enviado'
+        elif membro.status_conv == 'r':
+            status = 'Recusado'
+        elif membro.status_conv == 'd':   
+            status = 'Desistiu'       
+        else :
+            status = 'Sem Retorno'
+
+            
+        list_membros = {'id'    : membro.id,
+                         'nome'  : servo.nome,
+                         'equipe': equipe_servo.nome_equipe,
+                         'dt'    : str(membro.dt_convite),
+                         'status': status,
+                         'encontro': equipe_servo.encontro
+                        }
+                       
+ 
+        list_equipe.append(list_membros)    
+    if request.method == 'GET':                
+        return render(request,'lista_equipes.html',{'equipes':list_equipe})
+
+
+def listaEquipes1(request):
     serial = False    
     query = request.GET.get("busca",'')
     sort = request.GET.get("ordenar", '')
@@ -27,8 +65,7 @@ def listaEquipes(request):
 
     if request.method == 'GET':        
         return render(request,'lista_equipes.html',{'equipes':equipes})
-
-    elif request.method == 'POST':
+    else:
         return HttpResponse ("Logo faz algo")
     
 def consultaBanco(params):

@@ -22,7 +22,7 @@ class Person(models.Model):
     dt_nasc=models.DateField(blank=True,null=True)
     nivel=models.CharField(blank=True,choices=escolhas_nivel,max_length=30,verbose_name='Nível:')
     ##Endereco##
-    cep=models.IntegerField()
+    cep=models.CharField(max_length=8)
     logradouro=models.CharField(max_length=60)
     numero=models.IntegerField()
     complemento=models.CharField(max_length=40)
@@ -34,6 +34,7 @@ class Person(models.Model):
     dtcriacao = models.DateField(auto_now_add=True,blank=False,null=False)
     status  = models.BooleanField(default=True,editable=False)
     obs = models.TextField(blank=True,null =True,max_length=200)
+    idade = models.IntegerField(default=0,editable=False)
 
     def get_fullname(self):
         if self.apelido!='':
@@ -64,9 +65,9 @@ class Encontro(models.Model):
     uf=models.CharField(max_length=2,blank=True,null=True)
 
     def get_name_encontro(self):
-       return self.tema##verificarcomoatribuironome+ano
+       return self.ano##verificarcomoatribuironome+ano
     def __str__(self):
-        return self.get_name_encontro()
+        return str(self.get_name_encontro())
 #Paroquias
 class Paroquia(models.Model):
     nome_paroquia=models.CharField(max_length=30)
@@ -101,7 +102,7 @@ class Equipe(models.Model):
     nome_equipe=models.CharField(choices=escolhas_equipe,max_length=30,verbose_name='Equipes:')
     ano = models.IntegerField()
     obs = models.CharField(max_length=60,blank=True,null=True)
-    membs = models.ForeignKey(Person,on_delete=models.PROTECT)
+    # membs = models.ForeignKey(Person,on_delete=models.PROTECT)
     encontro = models.ForeignKey(Encontro,on_delete=models.PROTECT)
 
     def __str__(self):
@@ -109,16 +110,14 @@ class Equipe(models.Model):
 
 
 class Membros(models.Model):
-    opcoes_status=((u'a','Aguardando Convite'),(u'e','Convite Enviado'),(u'r','Convite Recusado'),(u'd','Desistiu'),(u'a','Aceito'),(u's','Sem Retorno'),)
+    opcoes_status=((u'ac','Aguardando Convite'),(u'e','Convite Enviado'),(u'r','Convite Recusado'),(u'd','Desistiu'),(u'a','Aceito'),(u's','Sem Retorno'),)
 
     # person = models.ForeignKey(Person, on_delete=models.PROTECT)
-    person = models.OneToOneField(Person, on_delete=models.PROTECT)
-    equipe = models.ForeignKey(Equipe,on_delete=models.PROTECT)
+    person = models.OneToOneField(Person, on_delete=models.PROTECT,related_name='person')
+    equipe = models.ForeignKey(Equipe,on_delete=models.PROTECT,related_name='equipe')
     #equipe = models.OneToOneField(Equipe,on_delete=models.PROTECT)
     dt_convite = models.DateField()
     status_conv=models.CharField(choices=opcoes_status,max_length=1,verbose_name='Status:',default='Aguardando Convite')
 
     def __str__(self):
         return self.person.nome
-    
-

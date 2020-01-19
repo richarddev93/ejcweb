@@ -5,9 +5,16 @@ from django.http.response import HttpResponse
 from django.core import serializers
 from django.http import JsonResponse
 from django.template.loader import render_to_string
-from .models import Person,Paroquia,Encontro
+from .models import Person,Paroquia,Encontro,Membros,Equipe
 from django.contrib.auth.decorators import login_required
 from .forms import newServoForm,newParoquiaForm,newEncontroForm
+from django.http import HttpRequest
+from datetime import datetime,date
+
+
+
+import requests,sys
+
 
 @login_required
 def home(request):
@@ -16,11 +23,12 @@ def home(request):
 @login_required    
 def listaServos(request):
     serial = False    
+    filter_equipe = request.GET.get("filtra_Equipe",'')
     query = request.GET.get("busca",'')
     sort = request.GET.get("ordenar", '')
     page = request.GET.get("page", '')
-    params = [serial,query,sort]
-
+    params = [serial,query,sort,filter_equipe]
+    
     try:
         servos = consultaBanco(params)
         servos = Paginator(servos,20)#definindo a paginação
@@ -30,8 +38,9 @@ def listaServos(request):
     except EmptyPage :
         servos = paginator.page(paginator.num_page)
 
-    if request.method == 'GET':        
-        return render(request,'lista_servos.html',{'servos':servos})
+    if request.method == 'GET':  
+
+        return render(request,'lista_servos.html',{'servos':servos,'quant':len(servos)})
 
     elif request.method == 'POST':
         return HttpResponse ("Logo faz algo")
@@ -39,11 +48,23 @@ def listaServos(request):
  
 def consultaBanco(params):
     if params[0] == True:
+         
          data = serializers.serialize("json", Person.objects.all())
     elif params[1]:
          data = Person.objects.filter(nome__icontains = params[1])
     elif params[2]:
          data = Person.objects.all().order_by(params[2])     
+    elif params[3]:
+        
+        data1 = Membros.objects.select_related("person").all().filter(equipe__nome_equipe__icontains=params[3]).values("person_id")
+                
+        ids=[id['person_id'] for id in data1] #pegando os ids dos servos que pertencem a query acima
+         
+        if len(data1)>=1:
+            data = Person.objects.filter(id__in=ids)
+        else:
+            data = Person.objects.all()#Por enquanto retornando todos novamente até tratar o retorno zero
+        
     else:
          data = Person.objects.all()
     return data
@@ -51,26 +72,34 @@ def consultaBanco(params):
 @login_required
 def novoServo(request):
     form = newServoForm(request.POST or None, request.FILES or None)
-    # form = FormTeste(request.POST or None, request.FILES or None)
-   
+     
     if form.is_valid():
+        post = form.save(commit=False)
+        data = date.today()
+        diff = ((data - post.dt_nasc)/365).days  
+        post.idade = diff
         form.save()
         return redirect('lista_servos')
     
-    # return render (request,'formTeste.html',{'form': form})
     return render (request,'form_servo.html',{'form': form})
-    #return HttpResponse(form)
+
 
 @login_required
 def atualizaServo(request,id):
     servo = get_object_or_404(Person,pk=id)
     testeObj = servo
-    form = newServoForm(request.POST or None,instance = servo )
+    form = newServoForm(request.POST or None,request.FILES or None ,instance = servo )
     if form.is_valid():
+        post = form.save(commit=False)
+        data = date.today()
+        diff = ((data - post.dt_nasc)/365).days  
+        post.idade = diff
+
         form.save()
         return redirect('lista_servos')
 
     return render (request,'form_servo.html',{'form': form})
+
 
 @login_required    
 def removeServo(request,id):
@@ -202,7 +231,7 @@ def novoEncontro(request):
 @login_required
 def atualizaEncontro(request,id):
     encontro = get_object_or_404(Encontro,pk=id)
-    form = newEncontroForm(request.POST or None,instance = encontro )
+    form = newEncontroForm(request.POST or None,request.FILES or none ,instance = encontro )
     if form.is_valid():
         form.save()
         return redirect('lista_encontros')
@@ -223,4 +252,12 @@ def removeEncontro(request,id):
 
 
 
-
+def consultacep(request,cep):
+    if request.method =='GET':
+        url = 'https://viacep.com.br/ws/'+cep+'/json/' 
+        # params = {'year': year, 'author': author}
+        # r = requests.get(url, params=params)
+        r = requests.get(url)
+        # r = render_to_string(r)
+        # books_list = {'books':books['results']}
+    return render( request,'form_servo.html',{'rua':r['logradouro']})

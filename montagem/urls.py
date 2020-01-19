@@ -4,6 +4,8 @@ from . import views_equipe
 
 
 urlpatterns = [
+    path('testelista/',views_equipe.lista_equipes,name ='listaequipesteste'),     
+    path('cep/<str:cep>/',views.consultacep,name ='cep'),     
     path('lista/',views.listaServos,name ='lista'),     
     path('novoservo/',views.novoServo,name ='new_servo'),   
     path('novaparoquia/',views.novaParoquia,name ='new_paroquia'),   
@@ -18,6 +20,7 @@ urlpatterns = [
     path('servos/',views.listaServos,name ='lista_servos'),   
     path('paroquias/',views.listaParoquias,name ='lista_paroquias'),   
     path('encontros/',views.listaEncontros,name ='lista_encontros'),   
+    path('equipes/',views_equipe.lista_equipes,name ='lista_equipes'),   
     path('',views.home,name ='home'),   
    
 ]

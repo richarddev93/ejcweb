@@ -25,7 +25,7 @@
       <!-- Dropdown Structure -->
       <ul id="dropdown_cad" class="dropdown-content">
         <li><a href="{% url 'lista_servos' %}">Servo</a></li>
-        <li><a href="#!">Equipe</a></li>
+        <li><a href="{% url 'lista_equipes' %}">Equipe</a></li>
         <li class="divider"></li>
         <li><a href="{% url 'lista_paroquias' %}">Paróquia</a></li>
         <li><a href="{% url 'lista_encontros' %}">Encontro</a></li>
@@ -41,8 +41,9 @@
         <li><a href="/accounts/logout">Sair</a></li>
         </ul>
  
-        <nav class="deep-purple" >
-          <div class="nav-wrapper" >
+        <nav class="deep-purple  navbar navbar-expand-md" >
+          <div class="nav-wrapper collapse navbar-collapse" id="collapsibleNavbar " >
+          {% comment %} <div class="collapse navbar-collapse" id="collapsibleNavbar"> {% endcomment %}
             {% comment %} <a href="{% url 'home' %}" class=" right brand-logo">EJC HELIPA</a> {% endcomment %}
             <ul class="right hide-on-med-and-down">
               <li><a class='dropdown-trigger ' href='#' data-target='dropdown_cont'>Minha Conta</a></li>
@@ -130,6 +131,73 @@
       </script>
       <!--MASCARAS-->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+      {% comment %} <script>
+          $(document).ready(function(){
+            $(".id_cep").focusout(function(){
+              var cep =$(".id_cep").val();
+              var  urlstr ="https://viacep.com.br/ws/"+cep+"/json/";
+
+              $.ajax({
+                url:urlstr,
+                type:"get",
+                dataType:"json",
+                success: function(data){
+                  console.log(data);
+
+                },
+                error: function(erro){
+                  console.log(erro);
+                }
+              });
+            });
+          });
+      </script> {% endcomment %}
+           <script>
+          $(document).ready(function(){
+            $("#id_cep").focusout(function(){
+               var cep =$("#id_cep").val();
+              var  urlstr ="https://viacep.com.br/ws/"+cep+"/json/";
+
+              $.ajax({
+                url:urlstr,
+                type:"get",
+                dataType:"json",
+                success: function(data){
+                  console.log(data);
+                   $("#id_logradouro").val(data.logradouro)
+                   $("#id_bairro").val(data.bairro)
+                   $("#id_localidade").val(data.localidade)
+                   $("#id_uf").val(data.uf)
+                   $("#id_complemento").val(data.complemento)
+
+                },
+                error: function(erro){
+                  console.log(erro);
+                }
+              });
+            });
+          });
+      </script> 
+
+      <script>
+        $( document ).ready(function() {
+            $('.dropdown-trigger-equipes').dropdown({
+              hover: false, // Activate on click
+              constrainWidth: false,
+              inDuration: 300,
+              outDuration: 225,
+              gutter: 0,
+              closeOnClick:true
+             
+            });
+        });
+    </script>
+
+    <script >
+      $(document).ready(function(){
+        $('.collapsible').collapsible();
+      });
+    </script>
     </body>
     
     
