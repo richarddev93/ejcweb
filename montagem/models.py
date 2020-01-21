@@ -12,6 +12,10 @@ class Person(models.Model):
         (u'convidado',u'Convidado'),
         (u'encontrista',u'Encontrista'),
     )
+    escolhas_estado_civil = (
+        (u'casado',u'Casado'),
+        (u'solteiro',u'Solteiro')
+     )
     nome = models.CharField(verbose_name = 'Nome', max_length=50)
     sobrenome=models.CharField(max_length=70)
     apelido=models.CharField(max_length=20,blank=True,null=True)
@@ -35,6 +39,7 @@ class Person(models.Model):
     status  = models.BooleanField(default=True,editable=False)
     obs = models.TextField(blank=True,null =True,max_length=200)
     idade = models.IntegerField(default=0,editable=False)
+    estado_civil =  models.CharField(max_length=8,choices=escolhas_estado_civil,blank=True,null=True)
 
     def get_fullname(self):
         if self.apelido!='':
