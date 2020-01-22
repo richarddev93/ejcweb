@@ -16,7 +16,7 @@ Novo Servo
             <div class="input-field col m3 s12">
               <div class="input-field col m12 s12">
                 <a class="mr-2" href="#">
-                  <img src={{form.instance.foto.url}} alt="users avatar" class="z-depth-4 circle" height="150" width="150">
+                  <img src= "{% if form.instance.foto %} {{form.instance.foto.url}} {% else %} https://beautifulmemory.sg/wp-content/uploads/2019/03/default-avatar-profile-icon-vector-18942381.jpg {% endif %}" alt="users avatar" class="z-depth-4 circle" height="150" width="150">
                 </a>         
               </div>
             </div>
