@@ -15,6 +15,7 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">    
       <!--Import do jquery-->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      
 
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -131,28 +132,7 @@
       </script>
       <!--MASCARAS-->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
-      {% comment %} <script>
-          $(document).ready(function(){
-            $(".id_cep").focusout(function(){
-              var cep =$(".id_cep").val();
-              var  urlstr ="https://viacep.com.br/ws/"+cep+"/json/";
-
-              $.ajax({
-                url:urlstr,
-                type:"get",
-                dataType:"json",
-                success: function(data){
-                  console.log(data);
-
-                },
-                error: function(erro){
-                  console.log(erro);
-                }
-              });
-            });
-          });
-      </script> {% endcomment %}
-           <script>
+        <script>
           $(document).ready(function(){
             $("#id_cep").focusout(function(){
                var cep =$("#id_cep").val();
@@ -196,6 +176,27 @@
     <script >
       $(document).ready(function(){
         $('.collapsible').collapsible();
+      });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/jquery.tablesorter.min.js"></script>
+    <script src="js/jquery.tablesorter.widgets.js"></script>
+    <script>
+      $(document).ready(function(){
+        $("table").tablesorter({
+          theme : "materialize",
+          headers: { 
+            // A segunda coluna (começa do zero) 
+            0: { 
+              // Desativa a ordenação para essa coluna 
+              sorter: false 
+            },
+            7: {
+              // Ativa o parser de data na coluna 4 (começa do 0)
+              sorter: false 
+            }
+          },
+        });
       });
     </script>
     </body>

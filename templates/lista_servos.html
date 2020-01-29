@@ -94,25 +94,8 @@
                         </form>
                     </div>
                 </div>
-                <!--PAINEL DE ORDENAÇÃO-->
-                <panel class = "panel panel-default">
-                    <div class = "panel-body">
-                        <form method="get">
-                            <div class = "btn-group" role = "group">
-                                {% with cat=request.GET.filtra_Equipe %}
-                                    <button type="submit" class="btn btn-small waves-effect waves-light  {% if cat == 'nome' %} disabled {% endif %}" name="filtra_Equipe" value="nome">Nome A-Z</button>
-                                    <button type="submit" class="btn btn-small waves-effect waves-light  {% if cat == '-nome' %} disabled {% endif %}" name="filtra_Equipe" value="-nome">Nome Z-A</button>
-                                    <button type="submit" class="btn btn-small waves-effect waves-light  {% if cat == 'dtcriacao' %} disabled {% endif %}"   name="filtra_Equipe" value="dtcriacao">Mais antigos</button>
-                                    <button type="submit" class="btn btn-small waves-effect waves-light   {% if cat == '-dtcriacao' %} disabled {% endif %}"  name="filtra_Equipe" value="-dtcriacao">Mais novos</button>
-                                    <a href = "{% url 'new_servo' %}"class="btn-floating btn-small waves-effect waves-light  right"><i class="material-icons">add</i></a>
-                                {% endwith %}
-                            </div>
-                        </form>
-                    </div>
-
-                </panel>
                 <!--Lista de Servos-->
-                <table class="table">
+                <table class =" centered highlight responsive-table striped">
                     <thead>
 
                         <th>Servo</th>
